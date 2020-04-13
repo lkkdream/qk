@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.li.house.common.dao.AppointmentMapper">
+  <resultMap id="BaseResultMap" type="com.li.house.common.domain.Appointment">
+    <id column="ap_id" jdbcType="VARCHAR" property="apId" />
+    <result column="u_id" jdbcType="VARCHAR" property="uId" />
+    <result column="r_id" jdbcType="VARCHAR" property="rId" />
+    <result column="ap_lookTime" jdbcType="TIMESTAMP" property="apLooktime" />
+    <result column="ap_createTime" jdbcType="TIMESTAMP" property="apCreatetime" />
+    <result column="order_num" jdbcType="VARCHAR" property="orderNum" />
+    <result column="price" jdbcType="VARCHAR" property="price" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ap_id, u_id, r_id, ap_lookTime, ap_createTime, order_num, price
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_appointment
+    where ap_id = #{apId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_appointment
+    where ap_id = #{apId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.li.house.common.domain.Appointment">
+    insert into t_appointment (ap_id, u_id, r_id, 
+      ap_lookTime, ap_createTime, order_num, 
+      price)
+    values (#{apId,jdbcType=VARCHAR}, #{uId,jdbcType=VARCHAR}, #{rId,jdbcType=VARCHAR}, 
+      #{apLooktime,jdbcType=TIMESTAMP}, #{apCreatetime,jdbcType=TIMESTAMP}, #{orderNum,jdbcType=VARCHAR}, 
+      #{price,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.li.house.common.domain.Appointment">
+    insert into t_appointment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="apId != null">
+        ap_id,
+      </if>
+      <if test="uId != null">
+        u_id,
+      </if>
+      <if test="rId != null">
+        r_id,
+      </if>
+      <if test="apLooktime != null">
+        ap_lookTime,
+      </if>
+      <if test="apCreatetime != null">
+        ap_createTime,
+      </if>
+      <if test="orderNum != null">
+        order_num,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="apId != null">
+        #{apId,jdbcType=VARCHAR},
+      </if>
+      <if test="uId != null">
+        #{uId,jdbcType=VARCHAR},
+      </if>
+      <if test="rId != null">
+        #{rId,jdbcType=VARCHAR},
+      </if>
+      <if test="apLooktime != null">
+        #{apLooktime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="apCreatetime != null">
+        #{apCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderNum != null">
+        #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.li.house.common.domain.Appointment">
+    update t_appointment
+    <set>
+      <if test="uId != null">
+        u_id = #{uId,jdbcType=VARCHAR},
+      </if>
+      <if test="rId != null">
+        r_id = #{rId,jdbcType=VARCHAR},
+      </if>
+      <if test="apLooktime != null">
+        ap_lookTime = #{apLooktime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="apCreatetime != null">
+        ap_createTime = #{apCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderNum != null">
+        order_num = #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ap_id = #{apId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.li.house.common.domain.Appointment">
+    update t_appointment
+    set u_id = #{uId,jdbcType=VARCHAR},
+      r_id = #{rId,jdbcType=VARCHAR},
+      ap_lookTime = #{apLooktime,jdbcType=TIMESTAMP},
+      ap_createTime = #{apCreatetime,jdbcType=TIMESTAMP},
+      order_num = #{orderNum,jdbcType=VARCHAR},
+      price = #{price,jdbcType=VARCHAR}
+    where ap_id = #{apId,jdbcType=VARCHAR}
+  </update>
+
+
+                                      <!--  自定义 -->
+  <!--预约信息 -->
+  <resultMap id="getAppointmentsMap" type="com.li.house.common.domain.Appointment">
+    <id column="ap_id" jdbcType="VARCHAR" property="apId" />
+    <result column="r_id" jdbcType="VARCHAR" property="rId" />
+    <result column="ap_createTime" jdbcType="TIMESTAMP" property="apCreatetime" />
+    <result column="order_num" jdbcType="VARCHAR" property="orderNum" />
+    <result column="price" jdbcType="VARCHAR" property="price" />
+  </resultMap>
+  <select id="getAppointmentsByUserId" resultMap="getAppointmentsMap" parameterType="java.lang.String" >
+    SELECT * FROM t_appointment AS tap WHERE tap.`u_id`=#{uId}
+  </select>
+</mapper>

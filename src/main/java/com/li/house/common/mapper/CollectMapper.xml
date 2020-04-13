@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.li.house.common.dao.CollectMapper">
+  <resultMap id="BaseResultMap" type="com.li.house.common.domain.Collect">
+    <id column="c_id" jdbcType="VARCHAR" property="cId" />
+    <result column="u_id" jdbcType="VARCHAR" property="uId" />
+    <result column="r_id" jdbcType="VARCHAR" property="rId" />
+    <result column="c_createTime" jdbcType="TIMESTAMP" property="cCreatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    c_id, u_id, r_id, c_createTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_collection
+    where c_id = #{cId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_collection
+    where c_id = #{cId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.li.house.common.domain.Collect">
+    insert into t_collection (c_id, u_id, r_id, 
+      c_createTime)
+    values (#{cId,jdbcType=VARCHAR}, #{uId,jdbcType=VARCHAR}, #{rId,jdbcType=VARCHAR}, 
+      #{cCreatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.li.house.common.domain.Collect">
+    insert into t_collection
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cId != null">
+        c_id,
+      </if>
+      <if test="uId != null">
+        u_id,
+      </if>
+      <if test="rId != null">
+        r_id,
+      </if>
+      <if test="cCreatetime != null">
+        c_createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cId != null">
+        #{cId,jdbcType=VARCHAR},
+      </if>
+      <if test="uId != null">
+        #{uId,jdbcType=VARCHAR},
+      </if>
+      <if test="rId != null">
+        #{rId,jdbcType=VARCHAR},
+      </if>
+      <if test="cCreatetime != null">
+        #{cCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.li.house.common.domain.Collect">
+    update t_collection
+    <set>
+      <if test="uId != null">
+        u_id = #{uId,jdbcType=VARCHAR},
+      </if>
+      <if test="rId != null">
+        r_id = #{rId,jdbcType=VARCHAR},
+      </if>
+      <if test="cCreatetime != null">
+        c_createTime = #{cCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where c_id = #{cId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.li.house.common.domain.Collect">
+    update t_collection
+    set u_id = #{uId,jdbcType=VARCHAR},
+      r_id = #{rId,jdbcType=VARCHAR},
+      c_createTime = #{cCreatetime,jdbcType=TIMESTAMP}
+    where c_id = #{cId,jdbcType=VARCHAR}
+  </update>
+</mapper>

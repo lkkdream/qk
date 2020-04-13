@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.li.house.common.dao.HouseKeeperMapper">
+  <resultMap id="BaseResultMap" type="com.li.house.common.domain.HouseKeeper">
+    <id column="hk_id" jdbcType="VARCHAR" property="hkId" />
+    <result column="hk_name" jdbcType="VARCHAR" property="hkName" />
+    <result column="hk_picture" jdbcType="VARCHAR" property="hkPicture" />
+    <result column="hk_phoneNum" jdbcType="VARCHAR" property="hkPhonenum" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    hk_id, hk_name, hk_picture, hk_phoneNum
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_houser_keeper
+    where hk_id = #{hkId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_houser_keeper
+    where hk_id = #{hkId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.li.house.common.domain.HouseKeeper">
+    insert into t_houser_keeper (hk_id, hk_name, hk_picture, 
+      hk_phoneNum)
+    values (#{hkId,jdbcType=VARCHAR}, #{hkName,jdbcType=VARCHAR}, #{hkPicture,jdbcType=VARCHAR}, 
+      #{hkPhonenum,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.li.house.common.domain.HouseKeeper">
+    insert into t_houser_keeper
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="hkId != null">
+        hk_id,
+      </if>
+      <if test="hkName != null">
+        hk_name,
+      </if>
+      <if test="hkPicture != null">
+        hk_picture,
+      </if>
+      <if test="hkPhonenum != null">
+        hk_phoneNum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="hkId != null">
+        #{hkId,jdbcType=VARCHAR},
+      </if>
+      <if test="hkName != null">
+        #{hkName,jdbcType=VARCHAR},
+      </if>
+      <if test="hkPicture != null">
+        #{hkPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="hkPhonenum != null">
+        #{hkPhonenum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.li.house.common.domain.HouseKeeper">
+    update t_houser_keeper
+    <set>
+      <if test="hkName != null">
+        hk_name = #{hkName,jdbcType=VARCHAR},
+      </if>
+      <if test="hkPicture != null">
+        hk_picture = #{hkPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="hkPhonenum != null">
+        hk_phoneNum = #{hkPhonenum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where hk_id = #{hkId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.li.house.common.domain.HouseKeeper">
+    update t_houser_keeper
+    set hk_name = #{hkName,jdbcType=VARCHAR},
+      hk_picture = #{hkPicture,jdbcType=VARCHAR},
+      hk_phoneNum = #{hkPhonenum,jdbcType=VARCHAR}
+    where hk_id = #{hkId,jdbcType=VARCHAR}
+  </update>
+
+  <!--房管员列表-->
+  <select id="getHouserKeeperList" resultMap="BaseResultMap">
+    SELECT * FROM t_houser_keeper AS th
+  </select>
+
+  <!--房管员统计-->
+  <resultMap id="hkCountMap" type="java.util.HashMap">
+    <result column="name" property="name"/>
+    <result column="num" property="num"/>
+  </resultMap>
+  <select id="hkCount" resultMap="hkCountMap" >
+    SELECT thk.`hk_name`AS NAME,COUNT(tap.`ap_id`)AS num  FROM t_appointment AS tap ,t_room AS tr,t_houser_keeper AS thk WHERE tap.`r_id`=tr.`r_id` AND tr.`r_house_keeper_id`= thk.`hk_id`
+    GROUP BY tap.`r_id`
+  </select>
+
+  <!---->
+  <select id="getHouserByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from  t_houser_keeper as thk where thk.hk_phoneNum=#{hkPhonenum,jdbcType=VARCHAR}
+  </select>
+</mapper>

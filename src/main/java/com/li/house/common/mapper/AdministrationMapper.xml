@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.li.house.common.dao.AdministrationMapper">
+  <resultMap id="BaseResultMap" type="com.li.house.common.domain.Administration">
+    <id column="a_id" jdbcType="VARCHAR" property="aId" />
+    <result column="a_name" jdbcType="VARCHAR" property="aName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    a_id, a_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_administration
+    where a_id = #{aId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_administration
+    where a_id = #{aId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.li.house.common.domain.Administration">
+    insert into t_administration (a_id, a_name)
+    values (#{aId,jdbcType=VARCHAR}, #{aName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.li.house.common.domain.Administration">
+    insert into t_administration
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="aId != null">
+        a_id,
+      </if>
+      <if test="aName != null">
+        a_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="aId != null">
+        #{aId,jdbcType=VARCHAR},
+      </if>
+      <if test="aName != null">
+        #{aName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.li.house.common.domain.Administration">
+    update t_administration
+    <set>
+      <if test="aName != null">
+        a_name = #{aName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where a_id = #{aId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.li.house.common.domain.Administration">
+    update t_administration
+    set a_name = #{aName,jdbcType=VARCHAR}
+    where a_id = #{aId,jdbcType=VARCHAR}
+  </update>
+
+
+
+                                 <!--   自定义     -->
+  <!--查所有的行政区域-->
+  <select id="getAllAdministrations" resultMap="BaseResultMap">
+    select * from t_administration
+  </select>
+</mapper>

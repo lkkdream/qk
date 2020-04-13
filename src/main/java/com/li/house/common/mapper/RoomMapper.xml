@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.li.house.common.dao.RoomMapper">
+  <resultMap id="BaseResultMap" type="com.li.house.common.domain.Room">
+    <id column="r_id" jdbcType="VARCHAR" property="rId" />
+    <result column="r_price" jdbcType="REAL" property="rPrice" />
+    <result column="r_orientation" jdbcType="VARCHAR" property="rOrientation" />
+    <result column="r_village" jdbcType="VARCHAR" property="rVillage" />
+    <result column="r_a_id" jdbcType="VARCHAR" property="rAId" />
+    <result column="r_floor" jdbcType="INTEGER" property="rFloor" />
+    <result column="r_total_floor" jdbcType="INTEGER" property="rTotalFloor" />
+    <result column="r_s_id" jdbcType="VARCHAR" property="rSId" />
+    <result column="r_house_keeper_id" jdbcType="VARCHAR" property="rHouseKeeperId" />
+    <result column="r_createTime" jdbcType="TIMESTAMP" property="rCreatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    r_id, r_price, r_orientation, r_village, r_a_id, r_floor, r_total_floor, r_s_id, 
+    r_house_keeper_id, r_createTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_room
+    where r_id = #{rId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_room
+    where r_id = #{rId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.li.house.common.domain.Room">
+    insert into t_room (r_id, r_price, r_orientation, 
+      r_village, r_a_id, r_floor, 
+      r_total_floor, r_s_id, r_house_keeper_id, 
+      r_createTime)
+    values (#{rId,jdbcType=VARCHAR}, #{rPrice,jdbcType=REAL}, #{rOrientation,jdbcType=VARCHAR}, 
+      #{rVillage,jdbcType=VARCHAR}, #{rAId,jdbcType=VARCHAR}, #{rFloor,jdbcType=INTEGER}, 
+      #{rTotalFloor,jdbcType=INTEGER}, #{rSId,jdbcType=VARCHAR}, #{rHouseKeeperId,jdbcType=VARCHAR}, 
+      #{rCreatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.li.house.common.domain.Room">
+    insert into t_room
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rId != null">
+        r_id,
+      </if>
+      <if test="rPrice != null">
+        r_price,
+      </if>
+      <if test="rOrientation != null">
+        r_orientation,
+      </if>
+      <if test="rVillage != null">
+        r_village,
+      </if>
+      <if test="rAId != null">
+        r_a_id,
+      </if>
+      <if test="rFloor != null">
+        r_floor,
+      </if>
+      <if test="rTotalFloor != null">
+        r_total_floor,
+      </if>
+      <if test="rSId != null">
+        r_s_id,
+      </if>
+      <if test="rHouseKeeperId != null">
+        r_house_keeper_id,
+      </if>
+      <if test="rCreatetime != null">
+        r_createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rId != null">
+        #{rId,jdbcType=VARCHAR},
+      </if>
+      <if test="rPrice != null">
+        #{rPrice,jdbcType=REAL},
+      </if>
+      <if test="rOrientation != null">
+        #{rOrientation,jdbcType=VARCHAR},
+      </if>
+      <if test="rVillage != null">
+        #{rVillage,jdbcType=VARCHAR},
+      </if>
+      <if test="rAId != null">
+        #{rAId,jdbcType=VARCHAR},
+      </if>
+      <if test="rFloor != null">
+        #{rFloor,jdbcType=INTEGER},
+      </if>
+      <if test="rTotalFloor != null">
+        #{rTotalFloor,jdbcType=INTEGER},
+      </if>
+      <if test="rSId != null">
+        #{rSId,jdbcType=VARCHAR},
+      </if>
+      <if test="rHouseKeeperId != null">
+        #{rHouseKeeperId,jdbcType=VARCHAR},
+      </if>
+      <if test="rCreatetime != null">
+        #{rCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.li.house.common.domain.Room">
+    update t_room
+    <set>
+      <if test="rPrice != null">
+        r_price = #{rPrice,jdbcType=REAL},
+      </if>
+      <if test="rOrientation != null">
+        r_orientation = #{rOrientation,jdbcType=VARCHAR},
+      </if>
+      <if test="rVillage != null">
+        r_village = #{rVillage,jdbcType=VARCHAR},
+      </if>
+      <if test="rAId != null">
+        r_a_id = #{rAId,jdbcType=VARCHAR},
+      </if>
+      <if test="rFloor != null">
+        r_floor = #{rFloor,jdbcType=INTEGER},
+      </if>
+      <if test="rTotalFloor != null">
+        r_total_floor = #{rTotalFloor,jdbcType=INTEGER},
+      </if>
+      <if test="rSId != null">
+        r_s_id = #{rSId,jdbcType=VARCHAR},
+      </if>
+      <if test="rHouseKeeperId != null">
+        r_house_keeper_id = #{rHouseKeeperId,jdbcType=VARCHAR},
+      </if>
+      <if test="rCreatetime != null">
+        r_createTime = #{rCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where r_id = #{rId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.li.house.common.domain.Room">
+    update t_room
+    set r_price = #{rPrice,jdbcType=REAL},
+      r_orientation = #{rOrientation,jdbcType=VARCHAR},
+      r_village = #{rVillage,jdbcType=VARCHAR},
+      r_a_id = #{rAId,jdbcType=VARCHAR},
+      r_floor = #{rFloor,jdbcType=INTEGER},
+      r_total_floor = #{rTotalFloor,jdbcType=INTEGER},
+      r_s_id = #{rSId,jdbcType=VARCHAR},
+      r_house_keeper_id = #{rHouseKeeperId,jdbcType=VARCHAR},
+      r_createTime = #{rCreatetime,jdbcType=TIMESTAMP}
+    where r_id = #{rId,jdbcType=VARCHAR}
+  </update>
+
+
+
+
+                             <!--  自定义  -->
+
+
+                            <!--  无条件查询  -->
+  <resultMap id="roomAtlas" type="com.li.house.common.dto.RoomDTO">
+    <id property="rId" column="r_id"/>
+    <result property="rPrice" column="r_price"/>
+    <result property="rOrientation" column="r_orientation"/>
+    <result property="rVillage" column="r_village"/>
+    <result property="rAId" column="r_a_id"/>
+    <result property="rFloor" column="r_floor"/>
+    <result property="rTotalFloor" column="r_total_floor"/>
+    <association property="administration" javaType="com.li.house.common.domain.Administration">
+      <id property="aId" column="a_id"/>
+      <result property="aName" column="a_name"/>
+    </association>
+    <association property="subway" javaType="com.li.house.common.domain.Subway">
+      <id property="sId" column="s_id"/>
+      <result property="sName" column="s_name"/>
+    </association>
+    <collection property="atlases" ofType="com.li.house.common.domain.Atlas">
+      <id column="at_id" jdbcType="VARCHAR" property="atId" />
+      <result column="at_url" jdbcType="VARCHAR" property="atUrl"/>
+      <result column="r_id" jdbcType="VARCHAR" property="rId" />
+    </collection>
+  </resultMap>
+  <select id="getAllRoomsByKeyWords" resultMap="roomAtlas" parameterType="com.li.house.common.dto.KeyWordsDTO">
+    SELECT * FROM t_room AS tr,t_atlas AS ta ,t_administration as tad,t_subway as ts WHERE tr.`r_id`=ta.r_id
+    <if test="price != null">
+     and tr.r_price=#{price,jdbcType=REAL}
+    </if>
+    <if test="administrativeId != null">
+      and tr.r_a_id=tad.a_id and tr.r_a_id=#{administrativeId,jdbcType=VARCHAR}
+    </if>
+    <if test="subwayLineId != null">
+      and  tr.r_s_id=ts.s_id and tr.r_s_id=#{subwayLineId,jdbcType=VARCHAR}
+    </if>
+    ORDER BY tr.r_createTime DESC
+  </select>
+
+                            <!--  统计房屋数量  -->
+  <select id="getRoomsNum" resultType="java.lang.Integer">
+    select count(tr.r_id) from t_room as tr
+  </select>
+
+
+                            <!--  通过id，得到具体信息  -->
+  <resultMap id="roomDetails" type="com.li.house.common.dto.RoomDTO">
+    <id property="rId" column="r_id"/>
+    <result property="rPrice" column="r_price"/>
+    <result property="rOrientation" column="r_orientation"/>
+    <result property="rVillage" column="r_village"/>
+    <result property="rAId" column="r_a_id"/>
+    <result property="rFloor" column="r_floor"/>
+    <result property="rTotalFloor" column="r_total_floor"/>
+    <association property="administration" javaType="com.li.house.common.domain.Administration">
+      <id property="aId" column="a_id"/>
+      <result property="aName" column="a_name"/>
+    </association>
+    <association property="subway" javaType="com.li.house.common.domain.Subway">
+      <id property="sId" column="s_id"/>
+      <result property="sName" column="s_name"/>
+    </association>
+    <collection property="atlases" ofType="com.li.house.common.domain.Atlas">
+      <id column="at_id" jdbcType="VARCHAR" property="atId" />
+      <result column="at_url" jdbcType="VARCHAR" property="atUrl"/>
+      <result column="r_id" jdbcType="VARCHAR" property="rId" />
+    </collection>
+  </resultMap>
+  <select id="getRoomDetails" resultMap="roomDetails" parameterType="java.lang.String">
+    SELECT * FROM t_room AS tr,t_atlas AS ta ,t_administration AS tad,t_subway AS ts WHERE  tr.`r_a_id`=tad.`a_id` AND tr.`r_s_id`=ts.`s_id`AND ta.`r_id`=tr.`r_id` AND tr.r_id=#{rId}
+  </select>
+
+
+
+                             <!--  查找所有-关键字  -->
+  <select id="getRoomsByKeyWords" resultMap="BaseResultMap" parameterType="com.li.house.common.dto.KeyWordsDTO">
+    SELECT * FROM t_room AS tr where tr.r_id=tr.r_id
+    <if test="price != null">
+      and tr.r_price between #{startPrice} and #{endPrice}
+    </if>
+    <if test="administrativeId != null">
+      and tr.r_a_id=#{administrativeId,jdbcType=VARCHAR}
+    </if>
+    <if test="subwayLineId != null">
+      and tr.r_s_id=#{subwayLineId,jdbcType=VARCHAR}
+    </if>
+    LIMIT #{pageNum},#{pageSize}
+  </select>
+
+
+                           <!-- 关键字统计房屋总数 -->
+  <select id="getRoomsCount" resultType="java.lang.Integer"  parameterType="com.li.house.common.dto.KeyWordsDTO">
+    SELECT count((tr.r_id)) FROM t_room AS tr where tr.r_id=tr.r_id
+    <if test="price != null">
+      and tr.r_price between #{startPrice} and #{endPrice}
+    </if>
+    <if test="administrativeId != null">
+      and tr.r_a_id=#{administrativeId,jdbcType=VARCHAR}
+    </if>
+    <if test="subwayLineId != null">
+      and tr.r_s_id=#{subwayLineId,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <select id="getRoomList" resultMap="BaseResultMap">
+    select * from  t_room
+  </select>
+
+  <resultMap id="countMap" type="java.util.HashMap">
+    <result column="name" property="name"/>
+    <result column="num" property="num"/>
+  </resultMap>
+  <select id="roomAdministrationCount"  resultMap="countMap">
+    SELECT tad.`a_name`AS NAME,COUNT(tr.`r_id`)AS num  FROM t_room AS tr  ,t_administration AS tad WHERE tr.`r_a_id`= tad.`a_id`  GROUP BY tr.`r_a_id`
+  </select>
+
+  <!--地铁沿线统计-->
+  <select id="roomAdminSubwayCount" resultMap="countMap">
+    SELECT  ts.`s_name`AS name ,COUNT(tr.`r_id`)AS num FROM t_room AS tr  ,t_subway AS ts
+    WHERE tr.`r_s_id`= ts.`s_id`  GROUP BY tr.`r_s_id`
+  </select>
+
+
+  <!--价格统计-->
+  <resultMap id="priceMap" type="java.util.HashMap">
+    <result column="price" property="name"/>
+    <result column="num" property="value"/>
+  </resultMap>
+  <select id="priceCount" resultMap="priceMap">
+    SELECT tr.`r_price` as price, COUNT(tr.`r_id`)AS num FROM t_room AS tr WHERE tr.`r_id`= tr.`r_id` GROUP BY tr.`r_price`
+  </select>
+
+  <!--批量添加-->
+  <insert id="insertByBach" parameterType="java.util.List">
+    insert  into t_room (r_id, r_price, r_orientation, r_village, r_a_id, r_floor, r_total_floor, r_s_id, r_house_keeper_id, r_createTime)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.rId,jdbcType=VARCHAR}, #{item.rPrice,jdbcType=REAL}, #{item.rOrientation,jdbcType=VARCHAR},
+      #{item.rVillage,jdbcType=VARCHAR}, #{item.rAId,jdbcType=VARCHAR}, #{item.rFloor,jdbcType=INTEGER},
+      #{item.rTotalFloor,jdbcType=INTEGER}, #{item.rSId,jdbcType=VARCHAR}, #{item.rHouseKeeperId,jdbcType=VARCHAR},
+      #{item.rCreatetime,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+</mapper>

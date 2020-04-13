@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.li.house.common.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.li.house.common.domain.User">
+    <id column="u_id" jdbcType="VARCHAR" property="uId" />
+    <result column="u_phoneNum" jdbcType="VARCHAR" property="uPhonenum" />
+    <result column="u_nickname" jdbcType="VARCHAR" property="uNickname" />
+    <result column="u_email" jdbcType="VARCHAR" property="uEmail" />
+    <result column="u_password" jdbcType="VARCHAR" property="uPassword" />
+    <result column="u_picture" jdbcType="VARCHAR" property="uPicture" />
+    <result column="u_prohibit" jdbcType="INTEGER" property="uProhibit" />
+    <result column="u_createTime" jdbcType="TIMESTAMP" property="uCreatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    u_id, u_phoneNum, u_nickname, u_email, u_password, u_picture, u_prohibit, u_createTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where u_id = #{uId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_user
+    where u_id = #{uId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.li.house.common.domain.User">
+    insert into t_user (u_id, u_phoneNum, u_nickname, 
+      u_email, u_password, u_picture, 
+      u_prohibit, u_createTime)
+    values (#{uId,jdbcType=VARCHAR}, #{uPhonenum,jdbcType=VARCHAR}, #{uNickname,jdbcType=VARCHAR},
+      #{uEmail,jdbcType=VARCHAR}, #{uPassword,jdbcType=VARCHAR}, #{uPicture,jdbcType=VARCHAR}, 
+      #{uProhibit,jdbcType=INTEGER}, #{uCreatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.li.house.common.domain.User">
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uId != null">
+        u_id,
+      </if>
+      <if test="uPhonenum != null">
+        u_phoneNum,
+      </if>
+      <if test="uNickname != null">
+        u_nickname,
+      </if>
+      <if test="uEmail != null">
+        u_email,
+      </if>
+      <if test="uPassword != null">
+        u_password,
+      </if>
+      <if test="uPicture != null">
+        u_picture,
+      </if>
+      <if test="uProhibit != null">
+        u_prohibit,
+      </if>
+      <if test="uCreatetime != null">
+        u_createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uId != null">
+        #{uId,jdbcType=VARCHAR},
+      </if>
+      <if test="uPhonenum != null">
+        #{uPhonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="uNickname != null">
+        #{uNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="uEmail != null">
+        #{uEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null">
+        #{uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uPicture != null">
+        #{uPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="uProhibit != null">
+        #{uProhibit,jdbcType=INTEGER},
+      </if>
+      <if test="uCreatetime != null">
+        #{uCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.li.house.common.domain.User">
+    update t_user
+    <set>
+      <if test="uPhonenum != null">
+        u_phoneNum = #{uPhonenum,jdbcType=VARCHAR},
+      </if>
+      <if test="uNickname != null">
+        u_nickname = #{uNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="uEmail != null">
+        u_email = #{uEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null">
+        u_password = #{uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uPicture != null">
+        u_picture = #{uPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="uProhibit != null">
+        u_prohibit = #{uProhibit,jdbcType=INTEGER},
+      </if>
+      <if test="uCreatetime != null">
+        u_createTime = #{uCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where u_id = #{uId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.li.house.common.domain.User">
+    update t_user
+    set u_phoneNum = #{uPhonenum,jdbcType=VARCHAR},
+      u_nickname = #{uNickname,jdbcType=VARCHAR},
+      u_email = #{uEmail,jdbcType=VARCHAR},
+      u_password = #{uPassword,jdbcType=VARCHAR},
+      u_picture = #{uPicture,jdbcType=VARCHAR},
+      u_prohibit = #{uProhibit,jdbcType=INTEGER},
+      u_createTime = #{uCreatetime,jdbcType=TIMESTAMP}
+    where u_id = #{uId,jdbcType=VARCHAR}
+  </update>
+
+
+                                    <!--  自定义方法 -->
+
+  <!--通过账号查找-->
+  <select id="selectByUserPhoneNum" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from  t_user as tu where tu.u_phoneNum=#{uPhonenum,jdbcType=VARCHAR}
+  </select>
+  <!--用户列表集合-->
+  <select id="selectUserList" resultMap="BaseResultMap">
+    select * from  t_user as tu where tu.u_prohibit=0
+  </select>
+
+
+  <!--用户总数-->
+
+  <select id="getUserCountNum" resultType="java.lang.Integer">
+    SELECT COUNT(tu.`u_id`)AS totalNum FROM t_user AS tu
+  </select>
+
+
+  <!--用户已租房数量-->
+  <resultMap id="userGetRoomNumMap" type="java.util.HashMap">
+    <result column="num" property="uId"/>
+  </resultMap>
+  <select id="userGetRoomNum" resultMap="userGetRoomNumMap">
+    SELECT tu.`u_id`AS num FROM t_appointment AS tap ,t_user AS tu WHERE tap.`u_id`=tu.`u_id` GROUP BY tap.`u_id`
+  </select>
+
+
+
+</mapper>

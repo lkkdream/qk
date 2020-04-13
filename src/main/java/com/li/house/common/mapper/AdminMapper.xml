@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.li.house.common.dao.AdminMapper">
+  <resultMap id="BaseResultMap" type="com.li.house.common.domain.Admin">
+    <id column="ad_id" jdbcType="VARCHAR" property="adId" />
+    <result column="ad_account" jdbcType="VARCHAR" property="adAccount" />
+    <result column="ad_password" jdbcType="VARCHAR" property="adPassword" />
+    <result column="ad_picture" jdbcType="VARCHAR" property="adPicture" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ad_id, ad_account, ad_password, ad_picture
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_admin
+    where ad_id = #{adId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_admin
+    where ad_id = #{adId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.li.house.common.domain.Admin">
+    insert into t_admin (ad_id, ad_account, ad_password, 
+      ad_picture)
+    values (#{adId,jdbcType=VARCHAR}, #{adAccount,jdbcType=VARCHAR}, #{adPassword,jdbcType=VARCHAR}, 
+      #{adPicture,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.li.house.common.domain.Admin">
+    insert into t_admin
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="adId != null">
+        ad_id,
+      </if>
+      <if test="adAccount != null">
+        ad_account,
+      </if>
+      <if test="adPassword != null">
+        ad_password,
+      </if>
+      <if test="adPicture != null">
+        ad_picture,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="adId != null">
+        #{adId,jdbcType=VARCHAR},
+      </if>
+      <if test="adAccount != null">
+        #{adAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="adPassword != null">
+        #{adPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="adPicture != null">
+        #{adPicture,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.li.house.common.domain.Admin">
+    update t_admin
+    <set>
+      <if test="adAccount != null">
+        ad_account = #{adAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="adPassword != null">
+        ad_password = #{adPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="adPicture != null">
+        ad_picture = #{adPicture,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ad_id = #{adId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.li.house.common.domain.Admin">
+    update t_admin
+    set ad_account = #{adAccount,jdbcType=VARCHAR},
+      ad_password = #{adPassword,jdbcType=VARCHAR},
+      ad_picture = #{adPicture,jdbcType=VARCHAR}
+    where ad_id = #{adId,jdbcType=VARCHAR}
+  </update>
+
+  <!--根据账号查找-->
+  <select id="loginAdmin" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select  * from  t_admin as ta where ta.ad_account=#{account}
+  </select>
+</mapper>

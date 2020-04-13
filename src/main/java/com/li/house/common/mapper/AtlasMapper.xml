@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.li.house.common.dao.AtlasMapper">
+  <resultMap id="BaseResultMap" type="com.li.house.common.domain.Atlas">
+    <id column="at_id" jdbcType="VARCHAR" property="atId" />
+    <result column="at_url" jdbcType="VARCHAR" property="atUrl" />
+    <result column="r_id" jdbcType="VARCHAR" property="rId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    at_id, at_url, r_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_atlas
+    where at_id = #{atId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_atlas
+    where at_id = #{atId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.li.house.common.domain.Atlas">
+    insert into t_atlas (at_id, at_url, r_id
+      )
+    values (#{atId,jdbcType=VARCHAR}, #{atUrl,jdbcType=VARCHAR}, #{rId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.li.house.common.domain.Atlas">
+    insert into t_atlas
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="atId != null">
+        at_id,
+      </if>
+      <if test="atUrl != null">
+        at_url,
+      </if>
+      <if test="rId != null">
+        r_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="atId != null">
+        #{atId,jdbcType=VARCHAR},
+      </if>
+      <if test="atUrl != null">
+        #{atUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="rId != null">
+        #{rId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.li.house.common.domain.Atlas">
+    update t_atlas
+    <set>
+      <if test="atUrl != null">
+        at_url = #{atUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="rId != null">
+        r_id = #{rId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where at_id = #{atId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.li.house.common.domain.Atlas">
+    update t_atlas
+    set at_url = #{atUrl,jdbcType=VARCHAR},
+      r_id = #{rId,jdbcType=VARCHAR}
+    where at_id = #{atId,jdbcType=VARCHAR}
+  </update>
+
+
+                                  <!-- 自定义   -->
+  <!-- 根据房屋id 查找房间图片 -->
+  <select id="getAtlasByRoomId" resultMap="BaseResultMap" >
+    select ta.at_id,ta.at_url from t_atlas as ta,t_room as tr where  ta.r_id=tr.r_id
+    and ta.r_id=#{rId}
+  </select>
+
+  <!--批量添加-->
+  <insert id="insertByBach" parameterType="java.util.List">
+    insert into t_atlas (at_id, at_url, r_id)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.atId,jdbcType=VARCHAR}, #{item.atUrl,jdbcType=VARCHAR}, #{item.rId,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+</mapper>
